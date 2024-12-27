@@ -32,3 +32,10 @@ C:\Users\kat\Documents\smokin-that-roach\backend\obj\Debug\net9.0\refint\backend
 C:\Users\kat\Documents\smokin-that-roach\backend\obj\Debug\net9.0\backend.pdb
 C:\Users\kat\Documents\smokin-that-roach\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\kat\Documents\smokin-that-roach\backend\obj\Debug\net9.0\ref\backend.dll
+C:\Users\kat\Documents\smokin-that-roach\backend\bin\Debug\net9.0\Scalar.AspNetCore.dll
+C:\Users\kat\Documents\smokin-that-roach\backend\bin\Debug\net9.0\DnsClient.dll
+C:\Users\kat\Documents\smokin-that-roach\backend\bin\Debug\net9.0\MongoDB.Bson.dll
+C:\Users\kat\Documents\smokin-that-roach\backend\bin\Debug\net9.0\MongoDB.Driver.dll
+C:\Users\kat\Documents\smokin-that-roach\backend\bin\Debug\net9.0\SharpCompress.dll
+C:\Users\kat\Documents\smokin-that-roach\backend\bin\Debug\net9.0\Snappier.dll
+C:\Users\kat\Documents\smokin-that-roach\backend\bin\Debug\net9.0\ZstdSharp.dll
