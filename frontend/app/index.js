@@ -5,10 +5,9 @@ const app = express()
 
 const routes = require('./routes/routes')
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/css', express.static(__dirname + 'public/css'));
-app.use('/js', express.static(__dirname + 'public/js'));
-app.use('/img', express.static(__dirname + 'public/img'));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/styles', express.static(__dirname + '../public/styles'));
+app.use('/scripts', express.static(__dirname + '../public/scripts'));
 
 app.set('views', './public/views')
 app.set('view engine', 'ejs')
