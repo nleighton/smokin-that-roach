@@ -1,0 +1,9 @@
+@import url('https://fonts.cdnfonts.com/css/motiva-sans');
+body {
+    background-color: rgb(27, 4, 4)
+}
+
+h1 {
+    font-family: "Motiva Sans", serif;
+    color: rgb(255, 220, 220);
+}
