@@ -42,8 +42,29 @@ body {
 
 #login h1 {
     font-size: 48px;
-    color: rgb(255, 220, 220);
+    color: white;
     margin-bottom: 20px;
+    background: linear-gradient(90deg, rgba(255, 0, 0, 1), rgba(255, 179, 179, 1)); /* Gradient from red to light red, right to left */
+    background-size: 200% 100%; /* Allow the gradient to extend horizontally */
+    background-position: 100% 0; /* Start the gradient at the right */
+    -webkit-background-clip: text; /* Webkit prefix for Safari and older Chrome */
+    -moz-background-clip: text; /* Firefox */
+    background-clip: text; /* Standard property */
+    color: transparent; /* Set text color to transparent so the gradient is visible */
+    animation: gradientMove 5s linear infinite; /* Apply the animation with a longer duration for smoothness */
+}
+
+/* Gradient animation */
+@keyframes gradientMove {
+    0% {
+        background-position: 100% 0; /* Start the gradient at the right */
+    }
+    50% {
+        background-position: 0 0; /* Move the gradient to the left */
+    }
+    100% {
+        background-position: 100% 0; /* Return the gradient to the right */
+    }
 }
 
 /* Input styles */
@@ -60,11 +81,17 @@ input[type="password"] {
     outline: none;
     backdrop-filter: blur(5px);
     font-family: "Motiva Sans", serif;
+    transition: opacity 0.25s ease, background-color 0.15s ease, border-color 0.15s ease; 
+}
+
+input[type="text"]:hover,
+input[type="password"]:hover {
+    border: 2px solid rgba(58, 3, 3, 0.8);
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border: 2px solid rgba(77, 4, 4, 0.8);
+    border: 2px solid rgba(104, 6, 6, 0.8);
 }
 
 /* Button styles */
@@ -83,16 +110,15 @@ input[type="password"]:focus {
     margin-top: 20px;
     opacity: 0;
     /* Start with invisible button */
-    transition: opacity 0.5s ease;
+    transition: opacity 0.25s ease, background-color 0.15s ease, border-color 0.15s ease; 
     /* Fade transition when the button appears */
     font-family: "Motiva Sans", serif;
 }
 
 /* Button hover styles */
 #loginbtn:hover:enabled {
-    background-color: rgba(77, 4, 4, 0.7);
-    /* Slightly darker on hover when enabled */
-    border-color: rgba(77, 4, 4, 0.8);
+    background-color: rgba(150, 20, 20, 0.7); /* Brighter shade */
+    border-color: rgba(150, 20, 20, 0.8); /* Brighter border */
 }
 
 /* Button focus styles */
@@ -135,11 +161,6 @@ input[type="password"]:focus {
     pointer-events: none;
     animation: pulse 6s infinite; /* Duration and infinite loop */
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* Smooth easing */
-}
-
-a {
-    font-family: "Motiva Sans", serif;
-    color: rgb(216, 42, 42);
 }
 
 /* Pulsing effect (subtle) */
