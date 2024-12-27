@@ -137,6 +137,11 @@ input[type="password"]:focus {
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* Smooth easing */
 }
 
+a {
+    font-family: "Motiva Sans", serif;
+    color: rgb(216, 42, 42);
+}
+
 /* Pulsing effect (subtle) */
 @keyframes pulse {
     0% {
