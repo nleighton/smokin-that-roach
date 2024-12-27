@@ -8,13 +8,28 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Replace with your frontend URL
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
 
 var client = new MongoClient("mongodb://localhost:27017");
 var database = client.GetDatabase("roach");
@@ -31,8 +46,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
  
-app.MapGet("/users/create", async (string username, string password) =>
+app.MapPost("/users/create", async (HttpRequest request) =>
 {
+    using var reader = new StreamReader(request.Body);
+    var body = await reader.ReadToEndAsync();
+
+    var json = System.Text.Json.JsonDocument.Parse(body);
+    var username = json.RootElement.GetProperty("username").GetString();
+    var password = json.RootElement.GetProperty("password").GetString();
+
+    if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) {
+        return HttpStatusCode.BadRequest;
+    }
+
     var existingUser = await collection.Find(u => u.Username == username).FirstOrDefaultAsync();
 
     if (existingUser != null) {
@@ -53,15 +79,23 @@ app.MapGet("/users/create", async (string username, string password) =>
 })
 .WithName("CreateUser");
 
-app.MapGet("/users/get", (string username) =>
-{
-    var result = collection.Find(u => u.Username == username).FirstOrDefault();
-    return result;
-})
-.WithName("GetUser");
+app.MapPost("/users/login", async (HttpRequest request) => {
+    using var reader = new StreamReader(request.Body);
+    var body = await reader.ReadToEndAsync();
 
-app.MapGet("/users/login", (string username, string password) => {
+    var json = System.Text.Json.JsonDocument.Parse(body);
+    var username = json.RootElement.GetProperty("username").GetString();
+    var password = json.RootElement.GetProperty("password").GetString();
+
+    if (username is null || password is null) {
+        return HttpStatusCode.BadRequest;
+    }
+
     var result = collection.Find(u => u.Username == username).FirstOrDefault();
+
+    if (result is null) {
+        return HttpStatusCode.NotFound;
+    }
 
     var validPassword = User.VerifyPassword(password, result.Password);
     if (validPassword) 
@@ -69,5 +103,13 @@ app.MapGet("/users/login", (string username, string password) => {
     return HttpStatusCode.Unauthorized;
 })
 .WithName("LoginUser");
+
+app.MapGet("/users/get", (string username) =>
+{
+    var result = collection.Find(u => u.Username == username).FirstOrDefault();
+
+    return result;
+})
+.WithName("GetUser");
 
 app.Run();

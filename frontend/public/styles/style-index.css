@@ -133,24 +133,22 @@ input[type="password"]:focus {
     border-radius: 50%;
     background-color: rgba(124, 15, 15, 0.2);
     pointer-events: none;
-    animation: pulse 6s ease-in-out infinite;
+    animation: pulse 6s infinite; /* Duration and infinite loop */
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* Smooth easing */
 }
 
 /* Pulsing effect (subtle) */
 @keyframes pulse {
     0% {
         transform: scale(0.95);
-        opacity: 0.5;
     }
 
     50% {
         transform: scale(1);
-        opacity: 0.8;
     }
 
     100% {
         transform: scale(0.95);
-        opacity: 0.5;
     }
 }
 

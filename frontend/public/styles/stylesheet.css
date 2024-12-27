@@ -7,3 +7,8 @@ h1 {
     font-family: "Motiva Sans", serif;
     color: rgb(255, 220, 220);
 }
+
+::selection {
+    background-color: rgb(206, 29, 29);
+    color: black;
+  }

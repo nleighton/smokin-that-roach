@@ -11,6 +11,9 @@
 
 <body>
 
+    <div id="fade-in" style="z-index: 999; padding: 100%; position:absolute; background-color: black; color: black;">
+    </div>
+
     <div class="dynamic-background"></div>
 
     <div id="sidebar">
@@ -44,6 +47,37 @@
         // Event listeners for input fields
         usernameInput.addEventListener('input', checkFields);
         passwordInput.addEventListener('input', checkFields);
+
+        loginButton.addEventListener('click', () => {
+            loginData = {
+                username: usernameInput.value.trim(),
+                password: passwordInput.value.trim()
+            }
+
+            console.log(JSON.stringify(loginData));
+
+            fetch("http://localhost:5251/users/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // Parse the JSON response
+                })
+                .then(data => {
+                    console.log('Response from API:', data);
+                    // Handle success response
+                })
+                .catch(error => {
+                    console.error('Error during API call:', error);
+                    // Handle error
+                });
+        })
 
         // Call checkFields initially to check if button should be enabled (in case of autofill)
         checkFields();
